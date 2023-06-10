@@ -27,17 +27,6 @@ class EksKubeconfigUpdate < Formula
     end
   end
 
-  on_windows do
-    if Hardware::CPU.intel?
-      url "https://github.com/clouddrove/kuconf/releases/download/v0.0.1/kuconf-windows-amd64.zip"
-      sha256 "188cfa407750083ff9474c12d3852e81384d20945f19e3d2437f1fef37fc583d"
-    end
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/clouddrove/kuconf/releases/download/v0.0.1/kuconf-windows-arm64.zip"
-      sha256 "e3c247e4f79756921eaef9fed507b97a1863a258b4415381ca2aa9fad74b0dae"
-    end
-  end
-
   def install
     bin.install "kuconf"
   end
