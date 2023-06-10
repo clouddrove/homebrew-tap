@@ -1,4 +1,4 @@
-class KuConf < Formula
+class Kuconf < Formula
   desc "Update kubeconfig for all clusters reachable from all AWS profiles"
   homepage "https://github.com/clouddrove/kuconf"
   version "v0.0.1"
