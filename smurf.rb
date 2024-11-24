@@ -1,5 +1,5 @@
-class smurf < Formula
-  desc "Update kubeconfig for all clusters reachable from all AWS profiles"
+class Smurf < Formula
+  desc "CloudNative CI/CD Management Tool"
   homepage "https://github.com/clouddrove/smurf"
   license "Apache-2.0"
   version "v0.0.1"
