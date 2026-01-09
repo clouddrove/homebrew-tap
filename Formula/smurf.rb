@@ -1,7 +1,7 @@
 class Smurf < Formula
   desc "CloudNative CI/CD Management Tool"
   homepage "https://github.com/clouddrove/smurf"
-  version "0.1.0"
+  version "v0.1.0"
   license "Apache-2.0"
 
   on_macos do
