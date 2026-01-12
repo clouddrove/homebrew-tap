@@ -7,24 +7,24 @@ class Smurf < Formula
   on_macos do
     on_arm do
       url "https://github.com/clouddrove/smurf/releases/download/v0.1.0/smurf-v0.1.0-darwin-arm64.tar.gz"
-      sha256 "6079654a2a638149c900aa4ccaa36f94cc1804902a9f1fd4918e721b77f2b4b5"
+      sha256 "c550f108b395386e3b8b96f5a39c7c2ebf7e63b4b06391a9642d5aa38f3ad70d"
     end
     
     on_intel do
       url "https://github.com/clouddrove/smurf/releases/download/v0.1.0/smurf-v0.1.0-darwin-amd64.tar.gz"
-      sha256 "c550f108b395386e3b8b96f5a39c7c2ebf7e63b4b06391a9642d5aa38f3ad70d"
+      sha256 "09ea6e3aa62d780c61bdb720026ca74689e3cdbbdc416b17d520c1719a17a8dd"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/clouddrove/smurf/releases/download/v0.1.0/smurf-v0.1.0-linux-amd64.tar.gz"
-      sha256 "96e6900b78d67e3752629ee67d5101013d66b448944469312611cc24185764d1"
+      sha256 "a691a72005cc130073441a4bd9275409b54a6daa88a816db17ee999dd8d2526c"
     end
     
     on_arm do
       url "https://github.com/clouddrove/smurf/releases/download/v0.1.0/smurf-v0.1.0-linux-arm64.tar.gz"
-      sha256 "0376b6f2df719993645b6edc4c49b2c97856b9deae2577c7e5a226b50ff94590"
+      sha256 "0c752a182218e18c7d8a0347e559c3392c5efc256637e1016f422de2aacac9a4"
     end
   end
 
