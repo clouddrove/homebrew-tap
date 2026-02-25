@@ -1,30 +1,30 @@
 class Smurf < Formula
   desc "CloudNative CI/CD Management Tool"
   homepage "https://github.com/clouddrove/smurf"
-  version "0.1.3"
+  version "1.0.0"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/clouddrove/smurf/releases/download/v0.1.3/smurf-v0.1.3-darwin-arm64.tar.gz"
-      sha256 "003e7fc9f73915d370f34d2b1a7269563ad978f6955d73125cdf68c3eb521130"
+      url "https://github.com/clouddrove/smurf/releases/download/v1.0.0/smurf-v1.0.0-darwin-arm64.tar.gz"
+      sha256 "a82f2807274d6f95cdee1cb0fbb4fd1046d65f2910fa67c1522805296fa04403"
     end
     
     on_intel do
-      url "https://github.com/clouddrove/smurf/releases/download/v0.1.3/smurf-v0.1.3-darwin-amd64.tar.gz"
-      sha256 "6fe19ab95281ae6b1760646d1b5ae066ed738643fde0a6214f47cf4d4620e1da"
+      url "https://github.com/clouddrove/smurf/releases/download/v1.0.0/smurf-v1.0.0-darwin-amd64.tar.gz"
+      sha256 "ade7fcbbc21b44ae97d64316189c8b86f23b08d13bf2e7638cfa5d2ceedc74b4"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/clouddrove/smurf/releases/download/v0.1.3/smurf-v0.1.3-linux-amd64.tar.gz"
-      sha256 "0ada7c20917ffd24b72e6d9c8eca7af275f19c11c35e74f34c106c4a7a410752"
+      url "https://github.com/clouddrove/smurf/releases/download/v1.0.0/smurf-v1.0.0-linux-amd64.tar.gz"
+      sha256 "c553ee2269c3a273a52fa4a7f2e3f20664ece990a5af290f71937ee1bce45006"
     end
     
     on_arm do
-      url "https://github.com/clouddrove/smurf/releases/download/v0.1.3/smurf-v0.1.3-linux-arm64.tar.gz"
-      sha256 "0c1cc6bb36ab7b57849e16930455ace57baa89a55d29b9d8bf09eeee751c1456"
+      url "https://github.com/clouddrove/smurf/releases/download/v1.0.0/smurf-v1.0.0-linux-arm64.tar.gz"
+      sha256 "d80df8af0879ef7614866788dc2f351a772197ed0e74b4f22b1eaf71523e08cc"
     end
   end
 
