@@ -36,5 +36,3 @@ class Smurf < Formula
     system "#{bin}/smurf", "--version"
   end
 end
-
-sha256:40c1c8a958e05e9f4a79808589a62b09e141bf6bec36932ed6b4df83410751db
