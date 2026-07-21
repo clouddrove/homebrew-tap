@@ -1,8 +1,8 @@
 class Noddy < Formula
   desc "macOS command-line tools for DevOps"
   homepage "https://github.com/clouddrove/noddy"
-  url "https://github.com/clouddrove/noddy/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "a231fb971e6db39ce26c9c1e77cd378d6344dad873293234f8af69a1ee18bdd6"
+  url "https://github.com/clouddrove/noddy/archive/refs/tags/v1.2.0.tar.gz"
+  sha256 "ec55e1c4465eedf09340de1f7856dbe76dd89ff32e4f3826c32a749b6ccf6aad"
   license "Apache-2.0"
 
   depends_on :macos
