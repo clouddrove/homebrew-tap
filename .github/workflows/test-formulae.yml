@@ -1,0 +1,115 @@
+name: Test formulae
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Install and test changed formulae
+    runs-on: macos-latest
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      HOMEBREW_NO_ANALYTICS: "1"
+      HOMEBREW_NO_ENV_HINTS: "1"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Need the base commit to diff against.
+          fetch-depth: 0
+
+      # Only the formulae touched by this change are installed. Testing every
+      # formula on every push would fail on unrelated pre-existing issues and
+      # would say nothing about the change under review.
+      - name: Determine changed formulae
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="origin/${{ github.base_ref }}"
+            git fetch -q origin "${{ github.base_ref }}"
+          else
+            base="${{ github.event.before }}"
+            # First push to a branch has no usable before-commit.
+            if ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+              base="HEAD~1"
+            fi
+          fi
+
+          formulae=$(git diff --name-only --diff-filter=d "$base" HEAD -- '*.rb' | tr '\n' ' ')
+          echo "formulae=${formulae}" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$formulae" ]; then
+            echo "No formula changes in this diff."
+          else
+            echo "Changed formulae: ${formulae}"
+          fi
+
+      # brew audit, install and test all take a formula name rather than a
+      # path: "brew audit [path ...]" is disabled outright. Register this
+      # checkout as the tap so the formulae can be referred to by name.
+      - name: Register the checkout as a tap
+        if: steps.changed.outputs.formulae != ''
+        run: |
+          tap_dir="$(brew --repository)/Library/Taps/clouddrove/homebrew-tap"
+          mkdir -p "$(dirname "$tap_dir")"
+          rm -rf "$tap_dir"
+          ln -s "$GITHUB_WORKSPACE" "$tap_dir"
+          brew tap | grep clouddrove
+
+      - name: Audit
+        if: steps.changed.outputs.formulae != ''
+        run: |
+          # --online also checks that the homepage and download URL resolve
+          # and that the checksum matches what is published.
+          for f in ${{ steps.changed.outputs.formulae }}; do
+            name="clouddrove/tap/$(basename "$f" .rb)"
+            echo "::group::brew audit $name"
+            brew audit --strict --online "$name" || {
+              echo "::error file=$f::brew audit failed"
+              exit 1
+            }
+            echo "::endgroup::"
+          done
+
+      - name: Install from source
+        if: steps.changed.outputs.formulae != ''
+        run: |
+          for f in ${{ steps.changed.outputs.formulae }}; do
+            name="clouddrove/tap/$(basename "$f" .rb)"
+            echo "::group::brew install $name"
+            brew install --build-from-source --verbose "$name" || {
+              echo "::error file=$f::brew install failed"
+              exit 1
+            }
+            echo "::endgroup::"
+          done
+
+      - name: Run the formula test block
+        if: steps.changed.outputs.formulae != ''
+        run: |
+          for f in ${{ steps.changed.outputs.formulae }}; do
+            name="clouddrove/tap/$(basename "$f" .rb)"
+            echo "::group::brew test $name"
+            brew test --verbose "$name" || {
+              echo "::error file=$f::brew test failed"
+              exit 1
+            }
+            echo "::endgroup::"
+          done
+
+      - name: List what was installed
+        if: steps.changed.outputs.formulae != ''
+        run: |
+          for f in ${{ steps.changed.outputs.formulae }}; do
+            name=$(basename "$f" .rb)
+            echo "::group::brew list $name"
+            brew list --verbose "$name"
+            echo "::endgroup::"
+          done
